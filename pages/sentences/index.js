@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Query from "../../comps/query";
 import styles from "../../styles/sentences.module.css";
 
 const URL = process.env.STRAPIBASEURL;
