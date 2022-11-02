@@ -2,8 +2,6 @@ import Link from "next/link";
 import styles from "../../styles/sentences.module.css";
 
 const URL = process.env.STRAPIBASEURL;
-// const sentences = Query();
-// console.log(sentences);
 
 export async function getStaticProps(context) {
   const fetchParams = {

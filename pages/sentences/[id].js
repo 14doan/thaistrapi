@@ -1,52 +1,5 @@
-// export const getStaticPaths = async () => {
-//   const res = await fetch(
-//     "https://my-json-server.typicode.com/14doan/json/sentences"
-//   );
-//   const data = await res.json();
-
-//   const paths = data.map((sentence) => {
-//     return {
-//       params: { id: sentence.id.toString() },
-//     };
-//   });
-
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// };
-
 const URL = process.env.STRAPIBASEURL;
 
-// export async function getStaticProps(context) {
-//   const fetchParams = {
-//     method: "post",
-//     headers: {
-//       "content-type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       query: `
-//       {
-//         sentences{
-//           data{
-//             id
-//             attributes{
-//               english
-//               thai
-//               note
-//             }
-//           }
-//         }
-//       }`,
-//     }),
-//   };
-//   const res = await fetch(`${URL}/graphql`, fetchParams);
-//   const data = await res.json();
-
-//   return {
-//     props: { sentences: data.data.sentences.data },
-//   };
-// }
 export const getStaticPaths = async () => {
   const fetchParams = {
     method: "POST",
@@ -97,7 +50,7 @@ export async function getStaticProps({ params }) {
           {
             sentences(filters:{
               id:{
-                contains:"${params.id}"
+                eq:"${params.id}"
               }}){
             data{
               attributes{
