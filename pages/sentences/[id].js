@@ -57,10 +57,11 @@ export async function getStaticProps({ params }) {
   };
 
   const res = await fetch(`${URL}/graphql`, fetchParams);
-  const { data } = await res.json();
+  const data = await res.json();
+  console.log(data);
 
   return {
-    props: { sentences: data.sentences.data[0] },
+    props: data.data.sentences.data[0],
     revalidate: 30,
   };
 }
