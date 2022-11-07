@@ -38,7 +38,7 @@ const Sentences = ({ sentences }) => {
   return (
     <div>
       <h2>All Basic Sentences</h2>
-      {console.log(sentences)}
+      {/* {console.log(sentences)} */}
 
       {sentences.map((s) => (
         <div key={s.id}>

@@ -1,6 +1,6 @@
 const URL = process.env.STRAPIBASEURL;
 
-export const getStaticPaths = async () => {
+export async function getStaticPaths() {
   const fetchParams = {
     method: "POST",
     headers: {
@@ -8,15 +8,17 @@ export const getStaticPaths = async () => {
     },
     body: JSON.stringify({
       query: `
-      {
-        sentences{
-          data{
-            id
-          }
-        }
-      }`,
+            {
+                sentences{
+                  data{
+                    id
+                  }
+                }
+              }
+            `,
     }),
   };
+
   const res = await fetch(`${URL}/graphql`, fetchParams);
   const sens = await res.json();
   const paths = sens.data.sentences.data.map((sen) => {
@@ -27,17 +29,7 @@ export const getStaticPaths = async () => {
     paths: paths,
     fallback: true,
   };
-};
-
-// export const getStaticProps = async (context, fetchParams) => {
-//   const id = context.params.id;
-//   const res = await fetch(`${URL}/graphql` + id, fetchParams);
-//   const data = await res.json();
-
-//   return {
-//     props: { sentence: data.data.sentences.data },
-//   };
-// };
+}
 
 export async function getStaticProps({ params }) {
   const fetchParams = {
@@ -47,38 +39,38 @@ export async function getStaticProps({ params }) {
     },
     body: JSON.stringify({
       query: `
-          {
-            sentences(filters:{
-              id:{
-                eq:"${params.id}"
-              }}){
-            data{
-              attributes{
-                english
-                thai
-                note
-              }
-            }
-          }}
-          `,
+      {
+        sentences(filters:{
+          id:{
+            eq:"${params.id}"
+          }}){
+        data{
+          attributes{
+            english
+            thai
+            note
+          }
+        }
+      }}
+            `,
     }),
   };
 
   const res = await fetch(`${URL}/graphql`, fetchParams);
-  const data = await res.json();
+  const { data } = await res.json();
 
   return {
-    props: { sentence: data.data.sentences.data[0] },
+    props: { sentences: data.sentences.data[0] },
     revalidate: 30,
   };
 }
-const Details = ({ sentence }) => {
+const Details = ({ english, thai, note }) => {
   // console.log(sentence);
   return (
     <div>
-      <h2>{sentence.attributes.english}</h2>
-      <p>{sentence.attributes.thai}</p>
-      <p>{sentence.attributes.note}</p>
+      <h2>{english}</h2>
+      <p>{thai}</p>
+      <p>{note}</p>
     </div>
   );
 };
