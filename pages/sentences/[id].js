@@ -1,3 +1,5 @@
+import reactMarkdown from "react-markdown";
+
 const URL = process.env.STRAPIBASEURL;
 
 export async function getStaticPaths() {
@@ -65,13 +67,15 @@ export async function getStaticProps({ params }) {
     revalidate: 30,
   };
 }
-const Details = ({ english, thai, note }) => {
+const Details = ({ attributes }) => {
   // console.log(sentence);
   return (
     <div>
-      <h2>{english}</h2>
-      <p>{thai}</p>
-      <p>{note}</p>
+      <reactMarkdown>
+        <h2>{attributes.english}</h2>
+        <p>{attributes.thai}</p>
+        <p>{attributes.note}</p>
+      </reactMarkdown>
     </div>
   );
 };
