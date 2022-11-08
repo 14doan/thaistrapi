@@ -1,5 +1,3 @@
-import reactMarkdown from "react-markdown";
-
 const URL = process.env.STRAPIBASEURL;
 
 export async function getStaticPaths() {
@@ -60,24 +58,22 @@ export async function getStaticProps({ params }) {
 
   const res = await fetch(`${URL}/graphql`, fetchParams);
   const data = await res.json();
-  console.log(data);
+  // console.log(data);
 
   return {
-    props: data.data.sentences.data[0],
+    props: data.data.sentences.data[0].attributes,
     revalidate: 30,
   };
 }
-const Details = ({ attributes }) => {
+function Details({ english, thai, note }) {
   // console.log(sentence);
   return (
     <div>
-      <reactMarkdown>
-        <h2>{attributes.english}</h2>
-        <p>{attributes.thai}</p>
-        <p>{attributes.note}</p>
-      </reactMarkdown>
+      <h2>{english}</h2>
+      <p>{thai}</p>
+      <p>{note}</p>
     </div>
   );
-};
+}
 
 export default Details;
